@@ -14,6 +14,7 @@
 #include "util/flow/FlowController.hpp"
 #include "util/serialization/Serializers.hpp"
 #include "util/Util.hpp"
+#include "util/performance_test/TestDataModel.hpp"
 
 namespace opencctv {
 

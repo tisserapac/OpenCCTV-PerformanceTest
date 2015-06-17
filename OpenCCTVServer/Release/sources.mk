@@ -26,6 +26,7 @@ SUBDIRS := \
 src/test/gateway \
 src/opencctv/util/serialization/gpb \
 src/opencctv/util/serialization \
+src/opencctv/util/performance_test \
 src/opencctv/util/log/colored \
 src/opencctv/util/log \
 src/opencctv/util/flow \

@@ -11,6 +11,7 @@ RM := rm -rf
 -include src/test/gateway/subdir.mk
 -include src/opencctv/util/serialization/gpb/subdir.mk
 -include src/opencctv/util/serialization/subdir.mk
+-include src/opencctv/util/performance_test/subdir.mk
 -include src/opencctv/util/log/colored/subdir.mk
 -include src/opencctv/util/log/subdir.mk
 -include src/opencctv/util/flow/subdir.mk
