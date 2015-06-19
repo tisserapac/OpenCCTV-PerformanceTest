@@ -22,7 +22,7 @@ void MockAnalytic::process(analytic::ImageQueue<analytic::api::Image_t>* pInputQ
 	{
 		/* 1. get a image from input queue */
 		api::Image_t image = pInputQueue->pop();
-		std::cerr << "process-pInputQueue->pop : i : " << i <<std::endl;
+		//std::cerr << "process-pInputQueue->pop : i : " << i <<std::endl;
 
 		//cv::Mat matInputImage = image.matImage; // got it
 		/* 2. clone the input image */
@@ -45,9 +45,9 @@ void MockAnalytic::process(analytic::ImageQueue<analytic::api::Image_t>* pInputQ
 		resultXml("Did a mock process.", sResultXml);
 		image.sCustomTextResult = sResultXml;
 		/* 6. push into output queue */
-		std::cerr << "process- Before pOutputQueue->push : i : " << i <<std::endl;
+		//std::cerr << "process- Before pOutputQueue->push : i : " << i <<std::endl;
 		pOutputQueue->push(image);
-		std::cerr << "process- After pOutputQueue->push : i : " << i <<std::endl;
+		//std::cerr << "process- After pOutputQueue->push : i : " << i <<std::endl;
 		++i;
 	}
 }
