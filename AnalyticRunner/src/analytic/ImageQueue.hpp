@@ -42,32 +42,6 @@ public:
 		_conditionVar.notify_one();
 	}
 
-	bool empty() const
-	{
-		boost::mutex::scoped_lock lock(_mutex);
-		return _queue.empty();
-	}
-
-	bool full() const
-	{
-		boost::mutex::scoped_lock lock(_mutex);
-		return (_queue.size() >= size);
-
-	}
-
-	/*bool try_pop(T& popped_value)
-	{
-		boost::mutex::scoped_lock lock(_mutex);
-		if(_queue.empty())
-		{
-			return false;
-		}
-
-		popped_value=_queue.front();
-		_queue.pop();
-		return true;
-	}*/
-
 	T pop()
 	{
 		std::cerr << "Analytic Runner ImageQueue : pop" << std::endl;
@@ -85,6 +59,19 @@ public:
 		_conditionVar.notify_one();
 
 		return result;
+	}
+
+	bool empty() const
+	{
+		boost::mutex::scoped_lock lock(_mutex);
+		return _queue.empty();
+	}
+
+	bool full() const
+	{
+		boost::mutex::scoped_lock lock(_mutex);
+		return (_queue.size() >= size);
+
 	}
 
 	virtual ~ImageQueue()
