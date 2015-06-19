@@ -14,7 +14,7 @@ bool MockAnalytic::init(const std::string& sAnalyticPluginDirLocation)
 	return true;
 }
 
-void MockAnalytic::process(analytic::ConcurrentQueue<analytic::api::Image_t>* pInputQueue, analytic::ConcurrentQueue<analytic::api::Image_t>* pOutputQueue)
+void MockAnalytic::process(analytic::ImageQueue<analytic::api::Image_t>* pInputQueue, analytic::ImageQueue<analytic::api::Image_t>* pOutputQueue)
 {
 
 	unsigned long long  i = 0;

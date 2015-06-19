@@ -2,7 +2,8 @@
 #ifndef ANALYTIC_ANALYTIC_HPP_
 #define ANALYTIC_ANALYTIC_HPP_
 
-#include "../ConcurrentQueue.hpp"
+//#include "../ConcurrentQueue.hpp"
+#include "../ImageQueue.hpp"
 #include <string>
 #include <sstream>
 #include <opencv2/core/core.hpp>
@@ -26,7 +27,7 @@ class Analytic
 public:
 	Analytic(){}
 	virtual bool init(const std::string& sAnalyticPluginDirLocation) = 0;
-	virtual void process(analytic::ConcurrentQueue<analytic::api::Image_t>* pInputQueue, analytic::ConcurrentQueue<analytic::api::Image_t>* pOutputQueue) = 0;
+	virtual void process(analytic::ImageQueue<analytic::api::Image_t>* pInputQueue, analytic::ImageQueue<analytic::api::Image_t>* pOutputQueue) = 0;
 	virtual std::string getInputStreamNames()
 	{
 		std::map<std::string, std::string> mInputStreams;
