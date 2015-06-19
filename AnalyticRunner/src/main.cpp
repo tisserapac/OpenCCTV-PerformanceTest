@@ -74,15 +74,6 @@ int main(int argc, char* argv[])
 	opencctv::PluginLoader<analytic::api::Analytic> analyticLoader;
 	analytic::api::Analytic* pAnalytic = NULL;
 	try {
-		/*==========Begin - For the mock analytic plugins =================*/
-
-		/*std::string sAnalyticPluginPath = sAnalyticPluginDirLocation;
-		sAnalyticPluginPath.append("/").append(sAnalyticPluginFilename);*/
-
-		/*==========End - For the mock analytic plugins =================*/
-
-		/*==========Begin - For the real analytic plugins =================*/
-
 		sAnalyticPluginDirLocation = analytic::util::Config::getInstance()->get(analytic::util::PROPERTY_ANALYTIC_PLUGIN_DIR);
 		if(*sAnalyticPluginDirLocation.rbegin() != '/') // check last char
 		{
@@ -92,8 +83,6 @@ int main(int argc, char* argv[])
 		std::string sAnalyticPluginPath;
 		opencctv::util::Util::findSharedLibOfPlugin(sAnalyticPluginDirLocation, sAnalyticPluginPath);
 		//std::cerr << "Analytic plugin path = " << sAnalyticPluginDirLocation << std::endl;
-
-		/*==========End - For the real analytic plugins =================*/
 
 		/*std::string msg = "AnalyticPluginPath : =========> ";
 		msg.append(sAnalyticPluginPath);
