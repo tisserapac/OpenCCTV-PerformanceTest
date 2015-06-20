@@ -42,7 +42,7 @@ void ResultRouterThread::operator()()
 			util::log::Loggers::getDefaultLogger()->debug(sMsg);
 
 			//Saving to DB
-			if(result.getWriteToDatabase())
+			/*if(result.getWriteToDatabase())
 			{
 				try
 				{
@@ -59,8 +59,7 @@ void ResultRouterThread::operator()()
 					sMsg = sErrorMessage.str();
 					util::log::Loggers::getDefaultLogger()->error(sMsg);
 				}
-			}
-
+			}*/
 
 			_pFlowController->received();
 			if(pSSerializedResult) delete pSSerializedResult;

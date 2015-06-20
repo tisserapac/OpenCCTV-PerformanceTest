@@ -58,8 +58,8 @@ void ImageMulticaster::start() {
 								pImage->setInputName(it->second.sInputName);
 								// send to Analytic Input queue
 								if (send(pSender, pImage)) {
-									//++i;
 									pFlowController->sent(pImage, lProducedTime);
+									++i;
 								}
 							}
 						}
@@ -73,12 +73,8 @@ void ImageMulticaster::start() {
 				}
 			}
 		}
-		else
-		{
-			opencctv::util::log::Loggers::getDefaultLogger()->error("waitAndGetFrontElement Failed");
-		}
 		pQueue->tryRemoveFrontElement();
-		++i;
+		//++i;
 	}
 }
 

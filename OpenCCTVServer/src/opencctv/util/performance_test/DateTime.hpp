@@ -22,6 +22,9 @@ public:
 	virtual ~DateTime();
 	static std::string getCurrentDateTime();
 	static unsigned long long getCurrentTimeMs();
+	static clock_t getCurrentClock();
+	static int getClockTime(timespec& time);
+	static long double diffClockTimeMs(const timespec& start, const timespec& end);
 };
 
 } /* namespace performance_test */

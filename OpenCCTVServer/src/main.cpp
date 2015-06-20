@@ -171,20 +171,8 @@ int main()
 				try {
 					pVmsPluginLoader = new opencctv::PluginLoader<opencctv::api::VmsConnector>();
 
-					/*======Begin For the FakeVmsConnectorPlugin==============*/
-
-					/*std::string sVmsPluginPath = stream.getVmsConnectorDirLocation();
-					sVmsPluginPath.append("/");
-					sVmsPluginPath.append(stream.getVmsConnectorFilename());*/
-
-					/*======End For the FakeVmsConnectorPlugin==============*/
-
-					/*======Begin For Real VmsConnectorPlugins==============*/
-
 					std::string sVmsPluginPath;
 					opencctv::util::Util::findSharedLibOfPlugin(sVmsPluginDirPath, sVmsPluginPath);
-
-					/*======End For Real VmsConnectorPlugins==============*/
 
 					pVmsPluginLoader->loadPlugin(sVmsPluginPath);
 					pModel->getVmsPluginLoaders()[stream.getVmsTypeId()] = pVmsPluginLoader;
@@ -305,7 +293,7 @@ void setupStreamTimer(int iStreamId)
 	logFileName.append(boost::lexical_cast<std::string>(iStreamId));
 	logFileName.append(".txt");
 	opencctv::util::performance_test::StreamTimer* pStreamTimer = NULL;
-	pStreamTimer = new opencctv::util::performance_test::StreamTimer(iStreamId,100,logFileName);
+	pStreamTimer = new opencctv::util::performance_test::StreamTimer(iStreamId,1000,logFileName);
 	opencctv::util::performance_test::TestDataModel* pTestDataModel = opencctv::util::performance_test::TestDataModel::getInstance();
 	pTestDataModel->getStreamTimers()[iStreamId] = pStreamTimer;
 }
