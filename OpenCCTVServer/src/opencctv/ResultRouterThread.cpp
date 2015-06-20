@@ -42,13 +42,13 @@ void ResultRouterThread::operator()()
 			util::log::Loggers::getDefaultLogger()->debug(sMsg);
 
 			//Saving to DB
-			/*if(result.getWriteToDatabase())
+			if(result.getWriteToDatabase())
 			{
 				try
 				{
 					opencctv::db::AnalyticResultGateway analyticResultGateway;
 					analyticResultGateway.insertResults(_iAnalyticInstanceId, result);
-					sMsg = "\t\t\tResult written to the database";
+					//sMsg = "\t\t\tResult written to the database";
 					util::log::Loggers::getDefaultLogger()->debug(sMsg);
 
 				}catch(opencctv::Exception &e)
@@ -59,7 +59,7 @@ void ResultRouterThread::operator()()
 					sMsg = sErrorMessage.str();
 					util::log::Loggers::getDefaultLogger()->error(sMsg);
 				}
-			}*/
+			}
 
 			_pFlowController->received();
 			if(pSSerializedResult) delete pSSerializedResult;
