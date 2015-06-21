@@ -47,7 +47,28 @@ void ResultRouterThread::operator()()
 		}
 
 		//Start inserting the analytic instance's results to the results DB
-		while(bConnected && _pFlowController && _pAnalyticResultGateway)
+
+		/*=====Begin - For Performance Testing===============*/
+
+		opencctv::util::performance_test::TestDataModel* pTestDataModel = opencctv::util::performance_test::TestDataModel::getInstance();
+		opencctv::util::performance_test::Timer* pResultsTimer = NULL;
+		int iCount = 0;
+		if(pTestDataModel->containsResultsTimer(_iAnalyticInstanceId))
+		{
+			pResultsTimer =  pTestDataModel->getStreamTimers()[_iAnalyticInstanceId];
+			iCount = pTestDataModel->getStreamTimers()[_iAnalyticInstanceId]->getCount();
+		}
+		/*=====End - For Performance Testing=================*/
+
+		if(pResultsTimer) //For Performance Testing
+		{
+			pResultsTimer->setStartTimes();
+		}
+
+		int i = 0;
+
+		//while(bConnected && _pFlowController && _pAnalyticResultGateway)
+		while(i<iCount && bConnected && _pFlowController && _pAnalyticResultGateway) //For Performance Testing
 		{
 			std::string* pSSerializedResult = receiver.receive();
 			analytic::AnalyticResult result = _pSerializer->deserializeAnalyticResult(*pSSerializedResult);
@@ -76,6 +97,12 @@ void ResultRouterThread::operator()()
 
 			_pFlowController->received();
 			if(pSSerializedResult) delete pSSerializedResult;
+		}
+
+		if(pResultsTimer) //For Performance Testing
+		{
+			pResultsTimer->setStopTimes();
+			pResultsTimer->writeAverageTimes();
 		}
 	}
 	opencctv::util::log::Loggers::getDefaultLogger()->info("Results Router Thread stopped.");
