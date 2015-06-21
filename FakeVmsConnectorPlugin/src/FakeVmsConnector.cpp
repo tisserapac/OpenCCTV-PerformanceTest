@@ -45,10 +45,10 @@ void FakeVmsConnector::produceImageObjects(opencctv::ConcurrentQueue<opencctv::I
 {
 	if(_pConfig && _pVImageData) _bEnable = true;
 
-	unsigned long long iCount = 100;
+	//unsigned long long iCount = 100;
 
-	//while(_bEnable)
-	while(_lCount < iCount)
+	while(_bEnable)
+	//while(_lCount < iCount)
 	{
 		opencctv::Image* pImage = new opencctv::Image();
 		std::stringstream ssTimestamp;
