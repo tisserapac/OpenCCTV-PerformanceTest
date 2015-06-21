@@ -35,6 +35,7 @@ AnalyticResultGateway::~AnalyticResultGateway() {
 	delete _pDbConnPtr;
 	_pDbConnPtr = NULL;
 
+	(*_pStatementPtr).close();
 	delete _pStatementPtr;
 	_pStatementPtr = NULL;
 }
