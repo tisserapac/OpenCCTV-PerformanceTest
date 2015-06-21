@@ -20,6 +20,7 @@ void ResultRouterThread::operator()()
 	ApplicationModel* pModel = ApplicationModel::getInstance();
 	if(pModel->containsResultsOutputQueueAddress(_iAnalyticInstanceId))
 	{
+		//Initialize the ZMQ connection to the analytic instance's output queue
 		bool bConnected = false;
 		mq::TcpMqReceiver receiver;
 		try
@@ -33,7 +34,41 @@ void ResultRouterThread::operator()()
 			sErrMsg.append(e.what());
 			util::log::Loggers::getDefaultLogger()->error(sErrMsg);
 		}
-		while(bConnected && _pFlowController)
+
+		//Create the AnalyticResultGateway to the DB
+		opencctv::db::AnalyticResultGateway* _pAnalyticResultGateway = NULL;
+		try
+		{
+			_pAnalyticResultGateway = new opencctv::db::AnalyticResultGateway();
+
+		}catch(opencctv::Exception &e)
+		{
+			util::log::Loggers::getDefaultLogger()->error(e.what());
+		}
+
+		//Start inserting the analytic instance's results to the results DB
+
+		/*=====Begin - For Performance Testing===============*/
+
+		/*opencctv::util::performance_test::TestDataModel* pTestDataModel = opencctv::util::performance_test::TestDataModel::getInstance();
+		opencctv::util::performance_test::Timer* pResultsTimer = NULL;
+		int iCount = 0;
+		if(pTestDataModel->containsResultsTimer(_iAnalyticInstanceId))
+		{
+			pResultsTimer =  pTestDataModel->getResultsTimers()[_iAnalyticInstanceId];
+			iCount = pTestDataModel->getResultsTimers()[_iAnalyticInstanceId]->getCount();
+		}*/
+		/*=====End - For Performance Testing=================*/
+
+		/*if(pResultsTimer) //For Performance Testing
+		{
+			pResultsTimer->setStartTimes();
+		}
+
+		int i = 0;*/
+
+		while(bConnected && _pFlowController && _pAnalyticResultGateway)
+		//while(i<iCount && bConnected && _pFlowController && _pAnalyticResultGateway) //For Performance Testing
 		{
 			std::string* pSSerializedResult = receiver.receive();
 			analytic::AnalyticResult result = _pSerializer->deserializeAnalyticResult(*pSSerializedResult);
@@ -46,9 +81,8 @@ void ResultRouterThread::operator()()
 			{
 				try
 				{
-					opencctv::db::AnalyticResultGateway analyticResultGateway;
-					analyticResultGateway.insertResults(_iAnalyticInstanceId, result);
-					sMsg = "\t\t\tResult written to the database";
+					(*_pAnalyticResultGateway).insertResults(_iAnalyticInstanceId, result);
+					//sMsg = "\t\t\tResult written to the database";
 					util::log::Loggers::getDefaultLogger()->debug(sMsg);
 
 				}catch(opencctv::Exception &e)
@@ -61,10 +95,16 @@ void ResultRouterThread::operator()()
 				}
 			}
 
-
 			_pFlowController->received();
 			if(pSSerializedResult) delete pSSerializedResult;
+			//++i; //For Performance Testing
 		}
+
+		/*if(pResultsTimer) //For Performance Testing
+		{
+			pResultsTimer->setStopTimes();
+			pResultsTimer->writeAverageTimes();
+		}*/
 	}
 	opencctv::util::log::Loggers::getDefaultLogger()->info("Results Router Thread stopped.");
 }

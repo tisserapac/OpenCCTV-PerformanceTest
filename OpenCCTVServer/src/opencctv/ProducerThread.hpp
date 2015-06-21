@@ -6,6 +6,7 @@
 #include "ApplicationModel.hpp"
 #include "Exception.hpp"
 #include "util/log/Loggers.hpp"
+#include "util/performance_test/TestDataModel.hpp"
 
 namespace opencctv {
 
@@ -15,6 +16,8 @@ private:
 	opencctv::ConcurrentQueue<opencctv::Image>* _pQueue;
 	PluginLoader<api::VmsConnector>* _pPluginLoader;
 	bool _bActive;
+	int _iStreamId;
+
 public:
 	ProducerThread(unsigned int iStreamId, opencctv::api::VmsConnector* pVmsConn);
 	void operator()();

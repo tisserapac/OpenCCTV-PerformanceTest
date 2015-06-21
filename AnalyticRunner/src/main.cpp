@@ -11,7 +11,8 @@
 #include "opencctv/mq/TcpMqReceiver.hpp"
 #include "opencctv/Exception.hpp"
 #include "opencctv/mq/TcpMqSender.hpp"
-#include "analytic/ConcurrentQueue.hpp"
+//#include "analytic/ConcurrentQueue.hpp"
+#include "analytic/ImageQueue.hpp"
 #include "analytic/api/Analytic.hpp"
 #include "opencctv/PluginLoader.hpp"
 #include "analytic/ProducerThread.hpp"
@@ -65,16 +66,14 @@ int main(int argc, char* argv[])
 	opencctv::util::log::Loggers::getDefaultLogger()->info("Creating Results output queue done.");
 
 	// Creating internal input, output queue
-	analytic::ConcurrentQueue<analytic::api::Image_t>* pInputImageQueue = new analytic::ConcurrentQueue<analytic::api::Image_t>(5);
-	analytic::ConcurrentQueue<analytic::api::Image_t>* pOutputResultQueue = new analytic::ConcurrentQueue<analytic::api::Image_t>(5);
+	analytic::ImageQueue<analytic::api::Image_t>* pInputImageQueue = new analytic::ImageQueue<analytic::api::Image_t>(10);
+	analytic::ImageQueue<analytic::api::Image_t>* pOutputResultQueue = new analytic::ImageQueue<analytic::api::Image_t>(10);
 	opencctv::util::log::Loggers::getDefaultLogger()->info("Creating internal input, output queue done.");
 
 	// Loading Analytic plugin
 	opencctv::PluginLoader<analytic::api::Analytic> analyticLoader;
 	analytic::api::Analytic* pAnalytic = NULL;
 	try {
-		//std::string sAnalyticPluginPath = sAnalyticPluginDirLocation;
-		//sAnalyticPluginPath.append("/").append(sAnalyticPluginFilename);
 		sAnalyticPluginDirLocation = analytic::util::Config::getInstance()->get(analytic::util::PROPERTY_ANALYTIC_PLUGIN_DIR);
 		if(*sAnalyticPluginDirLocation.rbegin() != '/') // check last char
 		{
@@ -84,6 +83,12 @@ int main(int argc, char* argv[])
 		std::string sAnalyticPluginPath;
 		opencctv::util::Util::findSharedLibOfPlugin(sAnalyticPluginDirLocation, sAnalyticPluginPath);
 		//std::cerr << "Analytic plugin path = " << sAnalyticPluginDirLocation << std::endl;
+
+		/*std::string msg = "AnalyticPluginPath : =========> ";
+		msg.append(sAnalyticPluginPath);
+
+		opencctv::util::log::Loggers::getDefaultLogger()->info(msg);*/
+
 		analyticLoader.loadPlugin(sAnalyticPluginPath);
 		pAnalytic = analyticLoader.createPluginInstance();
 	} catch (opencctv::Exception &e) {

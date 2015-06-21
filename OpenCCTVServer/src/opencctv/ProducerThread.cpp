@@ -17,6 +17,7 @@ ProducerThread::ProducerThread(unsigned int iStreamId, opencctv::api::VmsConnect
 	}
 	_pVmsConn = pVmsConn;
 	_bActive = false;
+	_iStreamId = iStreamId;
 }
 
 void ProducerThread::operator ()()
@@ -25,8 +26,23 @@ void ProducerThread::operator ()()
 	{
 		_bActive = true;
 		opencctv::util::log::Loggers::getDefaultLogger()->info("Producer Thread started.");
+
+		/*=====Begin - For Performance Testing===============*/
+
+		opencctv::util::performance_test::TestDataModel* pTestDataModel = opencctv::util::performance_test::TestDataModel::getInstance();
+		opencctv::util::performance_test::Timer* pStreamTimer = NULL;
+		if(pTestDataModel->containsStreamTimer(_iStreamId))
+		{
+			pStreamTimer =  pTestDataModel->getStreamTimers()[_iStreamId];
+		}
+		/*=====End - For Performance Testing=================*/
 		try
 		{
+			if(pStreamTimer) //For Performance Testing
+			{
+				pStreamTimer->setStartTimes();
+			}
+
 			_pVmsConn->produceImageObjects(_pQueue);
 		}
 		catch(std::exception &e)
