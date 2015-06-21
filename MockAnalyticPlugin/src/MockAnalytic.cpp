@@ -17,7 +17,7 @@ bool MockAnalytic::init(const std::string& sAnalyticPluginDirLocation)
 void MockAnalytic::process(analytic::ImageQueue<analytic::api::Image_t>* pInputQueue, analytic::ImageQueue<analytic::api::Image_t>* pOutputQueue)
 {
 
-	unsigned long long  i = 0;
+	//unsigned long long  i = 0;
 	while(true)
 	{
 		/* 1. get a image from input queue */
