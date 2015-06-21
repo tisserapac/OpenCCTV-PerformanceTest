@@ -1,7 +1,4 @@
 /Debug/
-/Release/libFakeVmsConnectorPlugin.so
-/Release/src/FakeVmsConnector.o
-/Release/src/MockAnalytic.d
 /Release/*.so
 /Release/src/*.d
 /Release/src/*.o
@@ -10,8 +7,4 @@
 /Release/src/util/*d
 /Release/src/util/*o
 /Release/
-
-
-/Release/src/FakeVmsConnector.o
-/Release/src/MockAnalytic.d
 
