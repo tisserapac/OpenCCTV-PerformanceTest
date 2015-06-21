@@ -55,8 +55,8 @@ void ResultRouterThread::operator()()
 		int iCount = 0;
 		if(pTestDataModel->containsResultsTimer(_iAnalyticInstanceId))
 		{
-			pResultsTimer =  pTestDataModel->getStreamTimers()[_iAnalyticInstanceId];
-			iCount = pTestDataModel->getStreamTimers()[_iAnalyticInstanceId]->getCount();
+			pResultsTimer =  pTestDataModel->getResultsTimers()[_iAnalyticInstanceId];
+			iCount = pTestDataModel->getResultsTimers()[_iAnalyticInstanceId]->getCount();
 		}
 		/*=====End - For Performance Testing=================*/
 
