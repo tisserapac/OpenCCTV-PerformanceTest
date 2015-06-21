@@ -311,8 +311,8 @@ void setupResultsTimer(int iAnalyticInstanceId)
 	std::string logFileName = "/usr/local/opencctv/performance-test/results";
 	logFileName.append(boost::lexical_cast<std::string>(iAnalyticInstanceId));
 	logFileName.append(".txt");
-	opencctv::util::performance_test::Timer* pStreamTimer = NULL;
-	pStreamTimer = new opencctv::util::performance_test::Timer(iAnalyticInstanceId,1000,logFileName);
+	opencctv::util::performance_test::Timer* pResultsTimer = NULL;
+	pResultsTimer = new opencctv::util::performance_test::Timer(iAnalyticInstanceId,1000,logFileName);
 	opencctv::util::performance_test::TestDataModel* pTestDataModel = opencctv::util::performance_test::TestDataModel::getInstance();
-	pTestDataModel->getStreamTimers()[iAnalyticInstanceId] = pStreamTimer;
+	pTestDataModel->getResultsTimers()[iAnalyticInstanceId] = pResultsTimer;
 }
