@@ -1,0 +1,10 @@
+/Debug/
+/Release/libMilestoneVmsConnectorPlugin.so
+/Release/src/*.d
+/Release/src/*.o
+/Release/src/opencctv/*.d
+/Release/src/opencctv/*.o
+/Release/src/tcpsocket/*.d
+/Release/src/tcpsocket/*.o
+/Release/src/milestone/*.d
+/Release/src/milestone/*.o
