@@ -97,6 +97,7 @@ void ResultRouterThread::operator()()
 
 			_pFlowController->received();
 			if(pSSerializedResult) delete pSSerializedResult;
+			++i;
 		}
 
 		if(pResultsTimer) //For Performance Testing
