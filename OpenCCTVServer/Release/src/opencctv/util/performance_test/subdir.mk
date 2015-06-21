@@ -5,18 +5,18 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../src/opencctv/util/performance_test/DateTime.cpp \
-../src/opencctv/util/performance_test/StreamTimer.cpp \
-../src/opencctv/util/performance_test/TestDataModel.cpp 
+../src/opencctv/util/performance_test/TestDataModel.cpp \
+../src/opencctv/util/performance_test/Timer.cpp 
 
 OBJS += \
 ./src/opencctv/util/performance_test/DateTime.o \
-./src/opencctv/util/performance_test/StreamTimer.o \
-./src/opencctv/util/performance_test/TestDataModel.o 
+./src/opencctv/util/performance_test/TestDataModel.o \
+./src/opencctv/util/performance_test/Timer.o 
 
 CPP_DEPS += \
 ./src/opencctv/util/performance_test/DateTime.d \
-./src/opencctv/util/performance_test/StreamTimer.d \
-./src/opencctv/util/performance_test/TestDataModel.d 
+./src/opencctv/util/performance_test/TestDataModel.d \
+./src/opencctv/util/performance_test/Timer.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

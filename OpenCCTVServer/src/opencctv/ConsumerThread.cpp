@@ -23,7 +23,7 @@ void ConsumerThread::operator ()()
 		/*=====Begin - For Performance Testing===============*/
 
 		opencctv::util::performance_test::TestDataModel* pTestDataModel = opencctv::util::performance_test::TestDataModel::getInstance();
-		opencctv::util::performance_test::StreamTimer* pStreamTimer = NULL;
+		opencctv::util::performance_test::Timer* pStreamTimer = NULL;
 		if(pTestDataModel->containsStreamTimer(_iStreamId))
 		{
 			pStreamTimer =  pTestDataModel->getStreamTimers()[_iStreamId];

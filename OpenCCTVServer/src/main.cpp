@@ -23,6 +23,7 @@
 
 void terminateHandler(int signum); // Terminate signal handler
 void setupStreamTimer(int iStreamId); //For performance testing
+void setupResultsTimer(int iAnalyticInstanceId); //For performance testing
 
 int main()
 {
@@ -139,6 +140,13 @@ int main()
 				sErrMsg.append(e.what());
 				opencctv::util::log::Loggers::getDefaultLogger()->error(sErrMsg);
 			}
+
+			/*=====Begin - For Performance Testing===============*/
+
+			setupResultsTimer(analyticInstance.getAnalyticInstanceId());
+
+			/*=====End - For Performance Testing=================*/
+
 		}
 
 		opencctv::util::log::Loggers::getDefaultLogger()->info("Starting Analytic Instances done.");
@@ -289,11 +297,22 @@ void terminateHandler(int signum) {
 
 void setupStreamTimer(int iStreamId)
 {
-	std::string logFileName = "/usr/local/opencctv/performance-test/";
+	std::string logFileName = "/usr/local/opencctv/performance-test/stream";
 	logFileName.append(boost::lexical_cast<std::string>(iStreamId));
 	logFileName.append(".txt");
-	opencctv::util::performance_test::StreamTimer* pStreamTimer = NULL;
-	pStreamTimer = new opencctv::util::performance_test::StreamTimer(iStreamId,1000,logFileName);
+	opencctv::util::performance_test::Timer* pStreamTimer = NULL;
+	pStreamTimer = new opencctv::util::performance_test::Timer(iStreamId,1000,logFileName);
 	opencctv::util::performance_test::TestDataModel* pTestDataModel = opencctv::util::performance_test::TestDataModel::getInstance();
 	pTestDataModel->getStreamTimers()[iStreamId] = pStreamTimer;
+}
+
+void setupResultsTimer(int iAnalyticInstanceId)
+{
+	std::string logFileName = "/usr/local/opencctv/performance-test/results";
+	logFileName.append(boost::lexical_cast<std::string>(iAnalyticInstanceId));
+	logFileName.append(".txt");
+	opencctv::util::performance_test::Timer* pStreamTimer = NULL;
+	pStreamTimer = new opencctv::util::performance_test::Timer(iAnalyticInstanceId,1000,logFileName);
+	opencctv::util::performance_test::TestDataModel* pTestDataModel = opencctv::util::performance_test::TestDataModel::getInstance();
+	pTestDataModel->getStreamTimers()[iAnalyticInstanceId] = pStreamTimer;
 }
