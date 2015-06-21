@@ -66,8 +66,8 @@ int main(int argc, char* argv[])
 	opencctv::util::log::Loggers::getDefaultLogger()->info("Creating Results output queue done.");
 
 	// Creating internal input, output queue
-	analytic::ImageQueue<analytic::api::Image_t>* pInputImageQueue = new analytic::ImageQueue<analytic::api::Image_t>(5);
-	analytic::ImageQueue<analytic::api::Image_t>* pOutputResultQueue = new analytic::ImageQueue<analytic::api::Image_t>(5);
+	analytic::ImageQueue<analytic::api::Image_t>* pInputImageQueue = new analytic::ImageQueue<analytic::api::Image_t>(10);
+	analytic::ImageQueue<analytic::api::Image_t>* pOutputResultQueue = new analytic::ImageQueue<analytic::api::Image_t>(10);
 	opencctv::util::log::Loggers::getDefaultLogger()->info("Creating internal input, output queue done.");
 
 	// Loading Analytic plugin
