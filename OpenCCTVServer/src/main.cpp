@@ -143,7 +143,7 @@ int main()
 
 			/*=====Begin - For Performance Testing===============*/
 
-			setupResultsTimer(analyticInstance.getAnalyticInstanceId());
+			//setupResultsTimer(analyticInstance.getAnalyticInstanceId());
 
 			/*=====End - For Performance Testing=================*/
 
