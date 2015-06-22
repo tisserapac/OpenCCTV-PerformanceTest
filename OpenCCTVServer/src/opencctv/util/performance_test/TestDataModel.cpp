@@ -15,28 +15,23 @@ TestDataModel* TestDataModel::_pModel = NULL;
 
 TestDataModel::TestDataModel()
 {
+	_timer = NULL;
 }
 
 TestDataModel* TestDataModel::getInstance() {
 	if (!_pModel) {
 		_pModel = new TestDataModel();
+
 	}
 	return _pModel;
 }
 
-std::map<unsigned int, util::performance_test::Timer*>& TestDataModel::getTimers()
-{
-	return _mTimers;
+util::performance_test::Timer*& TestDataModel::getTimer(){
+	return _timer;
 }
 
-bool TestDataModel::containsTimer(unsigned int iTimerId)
-{
-	std::map<unsigned int, util::performance_test::Timer*>::iterator it = _mTimers.find(iTimerId);
-	if(it != _mTimers.end())
-	{
-		return true;
-	}
-	return false;
+void TestDataModel::setTimer(util::performance_test::Timer*& timer) {
+	_timer = timer;
 }
 
 TestDataModel::~TestDataModel()

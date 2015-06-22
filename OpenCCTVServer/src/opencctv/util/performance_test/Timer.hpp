@@ -35,7 +35,7 @@ private:
 	/*timespec _timeStartClockTime;
 	timespec _timeStopClockTime;*/
 public:
-	Timer(int iId, int iCount, std::string sLogFileName);
+	Timer(int iCount, std::string sLogFileName, int iId = 0);
 	virtual ~Timer();
 
 	bool initLogFileEnty();

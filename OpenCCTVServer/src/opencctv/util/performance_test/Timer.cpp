@@ -11,7 +11,7 @@ namespace opencctv {
 namespace util {
 namespace performance_test {
 
-Timer::Timer(int iId, int iCount, std::string sLogFileName)
+Timer::Timer(int iCount, std::string sLogFileName, int iId)
 {
 	_iCount = iCount;
 	_iId = iId;
