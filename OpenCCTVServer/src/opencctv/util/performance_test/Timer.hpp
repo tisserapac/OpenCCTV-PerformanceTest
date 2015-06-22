@@ -32,8 +32,8 @@ private:
 	clock_t _clockStart;
 	clock_t _clockStop;
 
-	timespec _timeStartClockTime;
-	timespec _timeStopClockTime;
+	/*timespec _timeStartClockTime;
+	timespec _timeStopClockTime;*/
 public:
 	Timer(int iId, int iCount, std::string sLogFileName);
 	virtual ~Timer();

@@ -24,34 +24,19 @@ TestDataModel* TestDataModel::getInstance() {
 	return _pModel;
 }
 
-std::map<unsigned int, util::performance_test::Timer*>& TestDataModel::getStreamTimers()
+std::map<unsigned int, util::performance_test::Timer*>& TestDataModel::getTimers()
 {
-	return _mStreamTimers;
+	return _mTimers;
 }
 
-bool TestDataModel::containsStreamTimer(unsigned int iStreamId)
+bool TestDataModel::containsTimer(unsigned int iTimerId)
 {
-	std::map<unsigned int, util::performance_test::Timer*>::iterator it = _mStreamTimers.find(iStreamId);
-	if(it != _mStreamTimers.end())
+	std::map<unsigned int, util::performance_test::Timer*>::iterator it = _mTimers.find(iTimerId);
+	if(it != _mTimers.end())
 	{
 		return true;
 	}
 	return false;
-}
-
-bool TestDataModel::containsResultsTimer(unsigned int iAnalyticInstanceId)
-{
-	std::map<unsigned int, util::performance_test::Timer*>::iterator it = _mResultsTimers.find(iAnalyticInstanceId);
-	if(it != _mResultsTimers.end())
-	{
-		return true;
-	}
-	return false;
-}
-
-std::map<unsigned int, util::performance_test::Timer*>& TestDataModel::getResultsTimers()
-{
-	return _mResultsTimers;
 }
 
 TestDataModel::~TestDataModel()

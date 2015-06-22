@@ -47,7 +47,7 @@ bool Timer::writeAverageTimes()
 {
 	long double lAvgTime = (_lStopTime - _lStartTime)/(long double)_iCount;
 	long double lAvgCPUTime1 = (((long double)(_clockStop - _clockStart)*1000)/CLOCKS_PER_SEC)/_iCount;
-	long double lAvgCPUTime2 = DateTime::diffClockTimeMs(_timeStartClockTime,_timeStopClockTime)/_iCount;
+	//long double lAvgCPUTime2 = DateTime::diffClockTimeMs(_timeStartClockTime,_timeStopClockTime)/_iCount;
 
 	std::ofstream logFile;
 	logFile.open (_sLogFileName.c_str(),std::ios_base::app);
@@ -56,7 +56,7 @@ bool Timer::writeAverageTimes()
 	{
 		logFile << "AvgTotalTime: " << lAvgTime;
 		logFile << " AvgTotalCPUTime-clock(): " << lAvgCPUTime1;
-		logFile << " AvgTotalCPUTime-clock_gettime(): " << lAvgCPUTime2;
+		//logFile << " AvgTotalCPUTime-clock_gettime(): " << lAvgCPUTime2;
 		logFile << "\n";
 		logFile.close();
 
@@ -83,14 +83,14 @@ void Timer::setStartTimes()
 {
 	_lStartTime = DateTime::getCurrentTimeMs();
 	_clockStart = DateTime::getCurrentClock();
-	DateTime::getClockTime(_timeStartClockTime);
+	//DateTime::getClockTime(_timeStartClockTime);
 }
 
 void Timer::setStopTimes()
 {
 	_lStopTime = DateTime::getCurrentTimeMs();
 	_clockStop = DateTime::getCurrentClock();
-	DateTime::getClockTime(_timeStopClockTime);
+	//DateTime::getClockTime(_timeStopClockTime);
 }
 
 const std::string& Timer::getLogFileName() const {
