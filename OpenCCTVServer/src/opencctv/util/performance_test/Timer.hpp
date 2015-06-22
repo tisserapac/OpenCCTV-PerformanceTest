@@ -13,6 +13,7 @@
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
 #include "DateTime.hpp"
+#include "../log/Loggers.hpp"
 
 namespace opencctv {
 namespace util {
