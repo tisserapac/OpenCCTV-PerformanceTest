@@ -4,7 +4,7 @@ The main goal of the OpenCCTV project is to provide a Video Analytic platform fo
 
 NOTE:
 -----
-This repository contains the modules used in testing the performance of the OpenCCTV. Some of the modules are modified to include code on collecting performance data.
+This repository contains the modules used in testing the performance of the OpenCCTV. Some of the modules are modified to include code on collecting performance data. The original project can be found at [AIT VGL repository] (https://github.com/ait-vgl/OpenCCTV)
 
 Why did we start this project?
 ------------------------------
