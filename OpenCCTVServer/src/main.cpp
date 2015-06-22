@@ -36,10 +36,6 @@ int main()
 	signal(SIGINT, terminateHandler); // for Ctrl + C keyboard interrupt
 
 	// Initializing varibles
-	//For performance testing
-	opencctv::util::performance_test::Timer* timer = new opencctv::util::performance_test::Timer(1000,"/usr/local/opencctv/performance-test/timer.txt");
-	setupTimer(timer);
-
 	//test::gateway::TestStreamGateway streamGateway;
 	opencctv::db::StreamGateway* pStreamGateway = NULL;
 	try
@@ -94,6 +90,15 @@ int main()
 		opencctv::util::log::Loggers::getDefaultLogger()->error(sErrMsg);
 		return -1;
 	}
+
+	//For performance testing
+	opencctv::util::performance_test::Timer* timer = NULL;
+	if(vStreams.size() > 0)
+	{
+		timer = new opencctv::util::performance_test::Timer(1000, vStreams.size(), "/usr/local/opencctv/performance-test/timer.txt");
+		setupTimer(timer);
+	}
+
 	for(size_t i = 0; i < vStreams.size(); ++i)
 	{
 		opencctv::dto::Stream stream = vStreams[i];
@@ -247,7 +252,10 @@ int main()
 			}
 		}
 
-		timer->setStartTimes(); //For performance testing
+		if(timer)//For performance testing
+		{
+			timer->setStartTimes();
+		}
 
 		if (pQueue && pConsumer && pProducer) {
 			// Create and start Results Router threads
@@ -278,8 +286,11 @@ int main()
 	// _consumerThreadGroup.join_all();
 	// _producerThreadGroup.join_all();
 
-	timer->setStopTimes(); //For performance testing
-	timer->writeAverageTimes(); //For performance testing
+	if(timer)//For performance testing
+	{
+		timer->setStopTimes();
+		timer->writeAverageTimes();
+	}
 	terminateHandler(0);//For performance testing
 
 	return 0;

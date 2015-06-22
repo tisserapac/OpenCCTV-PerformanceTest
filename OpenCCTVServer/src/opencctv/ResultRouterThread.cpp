@@ -50,19 +50,19 @@ void ResultRouterThread::operator()()
 
 		/*=====Begin - For Performance Testing===============*/
 		opencctv::util::performance_test::TestDataModel* pTestDataModel = opencctv::util::performance_test::TestDataModel::getInstance();
-		int iCount = 0;
+		int iImageCount = 0;
 		int i = 0;
 		opencctv::util::performance_test::Timer* pTimer = pTestDataModel->getTimer();
 		if(pTimer)
 		{
-			iCount = pTimer->getCount();
+			iImageCount = pTimer->getImageCount();
 		}
 		/*=====End - For Performance Testing=================*/
 
 		analytic::AnalyticResult result;
 
 		//while(bConnected && _pFlowController && _pAnalyticResultGateway)
-		while(i<iCount && bConnected && _pFlowController && _pAnalyticResultGateway) //For Performance Testing
+		while(i<iImageCount && bConnected && _pFlowController && _pAnalyticResultGateway) //For Performance Testing
 		{
 			std::string* pSSerializedResult = receiver.receive();
 			result = _pSerializer->deserializeAnalyticResult(*pSSerializedResult);
@@ -96,7 +96,7 @@ void ResultRouterThread::operator()()
 
 		/*=====Begin - For Performance Testing===============*/
 		std::ostringstream osMsg;
-		osMsg << "Count = " << iCount;
+		osMsg << "Count = " << iImageCount;
 		util::log::Loggers::getDefaultLogger()->debug(osMsg.str());
 		/*=====End - For Performance Testing=================*/
 	}
