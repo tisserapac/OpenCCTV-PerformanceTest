@@ -36,10 +36,32 @@ int main()
 
 	// Initializing varibles
 	//test::gateway::TestStreamGateway streamGateway;
-	opencctv::db::StreamGateway streamGateway;
+	opencctv::db::StreamGateway* pStreamGateway = NULL;
+	try
+	{
+		pStreamGateway = new opencctv::db::StreamGateway();
+	}
+	catch(opencctv::Exception &e)
+	{
+		std::string sErrMsg = "Failed to create StreamGateway -  ";
+		sErrMsg.append(e.what());
+		opencctv::util::log::Loggers::getDefaultLogger()->error(sErrMsg);
+		return -1;
+	}
 
 	//test::gateway::TestAnalyticInstanceStreamGateway analyticInstanceGateway;
-	opencctv::db::AnalyticInstanceStreamGateway analyticInstanceGateway;
+	opencctv::db::AnalyticInstanceStreamGateway* pAnalyticInstanceGateway = NULL;
+	try
+	{
+		pAnalyticInstanceGateway = new opencctv::db::AnalyticInstanceStreamGateway();
+	}
+	catch(opencctv::Exception &e)
+	{
+		std::string sErrMsg = "Failed to create AnalyticInstanceStreamGateway -  ";
+		sErrMsg.append(e.what());
+		opencctv::util::log::Loggers::getDefaultLogger()->error(sErrMsg);
+		return -1;
+	}
 
 	opencctv::util::Config* pConfig = opencctv::util::Config::getInstance();
 	opencctv::ApplicationModel* pModel = opencctv::ApplicationModel::getInstance();
@@ -55,7 +77,7 @@ int main()
 	std::vector<opencctv::dto::Stream> vStreams;
 	try
 	{
-		streamGateway.findAll(vStreams);
+		pStreamGateway->findAll(vStreams);
 		opencctv::util::log::Loggers::getDefaultLogger()->info("Streams loaded.");
 
 		//std::cout << "======" <<vStreams.size() << std::endl;
@@ -83,7 +105,7 @@ int main()
 		std::vector<opencctv::dto::AnalyticInstanceStream> vAnalyticInstances;
 		try
 		{
-			analyticInstanceGateway.findAllForStream(stream.getId(), vAnalyticInstances);
+			pAnalyticInstanceGateway->findAllForStream(stream.getId(), vAnalyticInstances);
 			opencctv::util::log::Loggers::getDefaultLogger()->info("Analytic Instances Streams loaded.");
 		}
 		catch(opencctv::Exception &e)
