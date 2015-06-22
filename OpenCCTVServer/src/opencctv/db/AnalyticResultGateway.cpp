@@ -12,7 +12,8 @@ namespace db {
 
 const std::string AnalyticResultGateway::_INSERT_ANALYTIC_RESULT_SQL = "INSERT INTO results (analytic_id, timestamp, result_text) VALUES (?, ?, ?)";
 
-AnalyticResultGateway::AnalyticResultGateway() {
+AnalyticResultGateway::AnalyticResultGateway()
+{
 	try
 	{
 		_pDbConnPtr = DbConnector::getConnection_ResultsDB();
@@ -27,17 +28,15 @@ AnalyticResultGateway::AnalyticResultGateway() {
 	{
 		throw opencctv::Exception(e);
 	}
-
-
 }
 
 AnalyticResultGateway::~AnalyticResultGateway() {
-	delete _pDbConnPtr;
-	_pDbConnPtr = NULL;
-
 	(*_pStatementPtr).close();
 	delete _pStatementPtr;
 	_pStatementPtr = NULL;
+
+	delete _pDbConnPtr;
+	_pDbConnPtr = NULL;
 }
 
 int AnalyticResultGateway::insertResults(unsigned int iAnalyticInstanceId,analytic::AnalyticResult analyticResult)
