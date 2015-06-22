@@ -4,7 +4,7 @@
 namespace opencctv {
 
 //ResultRouterThread::ResultRouterThread(unsigned int iAnalyticInstanceId)
-ResultRouterThread::ResultRouterThread(unsigned int iAnalyticInstanceId,)
+ResultRouterThread::ResultRouterThread(unsigned int iAnalyticInstanceId)
 {
 	ApplicationModel* pModel = ApplicationModel::getInstance();
 	_pFlowController = NULL;
