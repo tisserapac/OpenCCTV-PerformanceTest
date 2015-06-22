@@ -63,12 +63,12 @@ void ResultRouterThread::operator()()
 		}
 		int i = 0;*/
 		/*=====End - For Performance Testing=================*/
-
+		analytic::AnalyticResult result;
 		while(bConnected && _pFlowController && _pAnalyticResultGateway)
 		//while(i<iCount && bConnected && _pFlowController && _pAnalyticResultGateway) //For Performance Testing
 		{
 			std::string* pSSerializedResult = receiver.receive();
-			analytic::AnalyticResult result = _pSerializer->deserializeAnalyticResult(*pSSerializedResult);
+			result = _pSerializer->deserializeAnalyticResult(*pSSerializedResult);
 			std::string sMsg = "\t\tReceived Result of ";
 			sMsg.append(result.getTimestamp());
 			util::log::Loggers::getDefaultLogger()->debug(sMsg);
