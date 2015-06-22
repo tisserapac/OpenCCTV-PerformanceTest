@@ -22,8 +22,7 @@
 #include "opencctv/util/performance_test/TestDataModel.hpp"
 
 void terminateHandler(int signum); // Terminate signal handler
-void setupStreamTimer(int iStreamId); //For performance testing
-void setupResultsTimer(int iAnalyticInstanceId); //For performance testing
+void setupTimer(int iStreamId); //For performance testing
 
 int main()
 {
@@ -72,9 +71,11 @@ int main()
 	{
 		opencctv::dto::Stream stream = vStreams[i];
 
+		unsigned int iTimerId = stream.getId();
+
 		/*=====Begin - For Performance Testing===============*/
 
-		setupStreamTimer(stream.getId());
+		//setupTimer(iTimerId);
 
 		/*=====End - For Performance Testing=================*/
 
@@ -143,7 +144,7 @@ int main()
 
 			/*=====Begin - For Performance Testing===============*/
 
-			//setupResultsTimer(analyticInstance.getAnalyticInstanceId());
+			setupTimer(analyticInstance.getAnalyticInstanceId());
 
 			/*=====End - For Performance Testing=================*/
 
@@ -230,7 +231,7 @@ int main()
 				ssMsg << "VMS Connector plugin " << stream.getId();
 				ssMsg << " init done.";
 				opencctv::util::log::Loggers::getDefaultLogger()->info(ssMsg.str());
-				pProducer = new opencctv::ProducerThread(stream.getId(), pVmsConnector);
+				pProducer = new opencctv::ProducerThread(stream.getId(), pVmsConnector, iTimerId);
 			}
 		}
 		if (pQueue && pConsumer && pProducer) {
@@ -239,7 +240,7 @@ int main()
 				opencctv::dto::AnalyticInstanceStream analyticInstance = vAnalyticInstances[j];
 				if(pModel->containsResultsOutputQueueAddress(analyticInstance.getAnalyticInstanceId()))
 				{
-					opencctv::ResultRouterThread* pResultsRouter = new opencctv::ResultRouterThread(analyticInstance.getAnalyticInstanceId());
+					opencctv::ResultRouterThread* pResultsRouter = new opencctv::ResultRouterThread(analyticInstance.getAnalyticInstanceId(), iTimerId);
 					boost::thread* pResultsRouterThread = new boost::thread(*pResultsRouter);
 					if(pResultsRouterThread->joinable())
 					{
@@ -261,6 +262,8 @@ int main()
 	_resultsRouterThreadGroup.join_all();
 	// _consumerThreadGroup.join_all();
 	// _producerThreadGroup.join_all();
+
+	terminateHandler(0);//For performance testing
 	return 0;
 }
 
@@ -295,24 +298,13 @@ void terminateHandler(int signum) {
 	exit(signum);
 }
 
-void setupStreamTimer(int iStreamId)
+void setupTimer(int iTimerId)
 {
-	std::string logFileName = "/usr/local/opencctv/performance-test/stream";
-	logFileName.append(boost::lexical_cast<std::string>(iStreamId));
+	std::string logFileName = "/usr/local/opencctv/performance-test/timer";
+	logFileName.append(boost::lexical_cast<std::string>(iTimerId));
 	logFileName.append(".txt");
-	opencctv::util::performance_test::Timer* pStreamTimer = NULL;
-	pStreamTimer = new opencctv::util::performance_test::Timer(iStreamId,1000,logFileName);
+	opencctv::util::performance_test::Timer* pTimer = NULL;
+	pTimer = new opencctv::util::performance_test::Timer(iTimerId,1000,logFileName);
 	opencctv::util::performance_test::TestDataModel* pTestDataModel = opencctv::util::performance_test::TestDataModel::getInstance();
-	pTestDataModel->getStreamTimers()[iStreamId] = pStreamTimer;
-}
-
-void setupResultsTimer(int iAnalyticInstanceId)
-{
-	std::string logFileName = "/usr/local/opencctv/performance-test/results";
-	logFileName.append(boost::lexical_cast<std::string>(iAnalyticInstanceId));
-	logFileName.append(".txt");
-	opencctv::util::performance_test::Timer* pResultsTimer = NULL;
-	pResultsTimer = new opencctv::util::performance_test::Timer(iAnalyticInstanceId,1000,logFileName);
-	opencctv::util::performance_test::TestDataModel* pTestDataModel = opencctv::util::performance_test::TestDataModel::getInstance();
-	pTestDataModel->getResultsTimers()[iAnalyticInstanceId] = pResultsTimer;
+	pTestDataModel->getTimers()[iTimerId] = pTimer;
 }
