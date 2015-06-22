@@ -24,14 +24,7 @@ void ImageMulticaster::start() {
 		opencctv::util::log::Loggers::getDefaultLogger()->info(ssMsg.str());
 	}
 
-	/*=====Begin - For Performance Testing===============*/
-	opencctv::util::performance_test::TestDataModel* pTestDataModel = opencctv::util::performance_test::TestDataModel::getInstance();
-	int iCount = pTestDataModel->getStreamTimers()[_iStreamId]->getCount();
-	int i = 0;
-	/*=====End - For Performance Testing=================*/
-
-	//while (_bEnable) {
-	while(i < iCount)
+	while (_bEnable)
 	{
 		std::stringstream ssMsg;
 		/*ssMsg << "ImageMulticaster i = " << i;
@@ -59,7 +52,6 @@ void ImageMulticaster::start() {
 								// send to Analytic Input queue
 								if (send(pSender, pImage)) {
 									pFlowController->sent(pImage, lProducedTime);
-									++i;
 								}
 							}
 						}
@@ -67,14 +59,13 @@ void ImageMulticaster::start() {
 					else
 					{
 						ssMsg.clear();
-						ssMsg << "ImageMulticaster cannot send image = " << i;
+						ssMsg << "ImageMulticaster cannot send the current image";
 						opencctv::util::log::Loggers::getDefaultLogger()->error(ssMsg.str());
 					}
 				}
 			}
 		}
 		pQueue->tryRemoveFrontElement();
-		//++i;
 	}
 }
 

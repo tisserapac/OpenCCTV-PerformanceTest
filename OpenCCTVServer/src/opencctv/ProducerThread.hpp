@@ -17,9 +17,11 @@ private:
 	PluginLoader<api::VmsConnector>* _pPluginLoader;
 	bool _bActive;
 	int _iStreamId;
+	unsigned int _iTimerId;
 
 public:
-	ProducerThread(unsigned int iStreamId, opencctv::api::VmsConnector* pVmsConn);
+	//ProducerThread(unsigned int iStreamId, opencctv::api::VmsConnector* pVmsConn);
+	ProducerThread(unsigned int iStreamId, opencctv::api::VmsConnector* pVmsConn,unsigned int iTimerId = 0); //For performance testing
 	void operator()();
 	bool isStillRunning();
 };

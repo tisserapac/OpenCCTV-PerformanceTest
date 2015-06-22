@@ -19,8 +19,11 @@ private:
 	util::flow::FlowController* _pFlowController;
 	unsigned int _iAnalyticInstanceId;
 	util::serialization::Serializable* _pSerializer;
+	unsigned int _iTimerId;//For performance Testing
+
 public:
-	ResultRouterThread(unsigned int iAnalyticInstanceId);
+	//ResultRouterThread(unsigned int iAnalyticInstanceId);
+	ResultRouterThread(unsigned int iAnalyticInstanceId, unsigned int iTimerId = 0);//For performance testing
 	void operator()();
 };
 

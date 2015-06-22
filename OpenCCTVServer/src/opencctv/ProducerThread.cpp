@@ -3,7 +3,9 @@
 
 namespace opencctv {
 
-ProducerThread::ProducerThread(unsigned int iStreamId, opencctv::api::VmsConnector* pVmsConn) {
+//ProducerThread::ProducerThread(unsigned int iStreamId, opencctv::api::VmsConnector* pVmsConn)
+ProducerThread::ProducerThread(unsigned int iStreamId, opencctv::api::VmsConnector* pVmsConn,unsigned int iTimerId)//For performance testing
+{
 	ApplicationModel* pModel = ApplicationModel::getInstance();
 	_pQueue = NULL;
 	if(pModel->containsInternalQueue(iStreamId))
@@ -18,6 +20,7 @@ ProducerThread::ProducerThread(unsigned int iStreamId, opencctv::api::VmsConnect
 	_pVmsConn = pVmsConn;
 	_bActive = false;
 	_iStreamId = iStreamId;
+	_iTimerId = iTimerId; //For performance testing
 }
 
 void ProducerThread::operator ()()
@@ -29,19 +32,19 @@ void ProducerThread::operator ()()
 
 		/*=====Begin - For Performance Testing===============*/
 
-		opencctv::util::performance_test::TestDataModel* pTestDataModel = opencctv::util::performance_test::TestDataModel::getInstance();
-		opencctv::util::performance_test::Timer* pStreamTimer = NULL;
-		if(pTestDataModel->containsStreamTimer(_iStreamId))
+		/*opencctv::util::performance_test::TestDataModel* pTestDataModel = opencctv::util::performance_test::TestDataModel::getInstance();
+		opencctv::util::performance_test::Timer* pTimer = NULL;
+		if(pTestDataModel->containsTimer(_iTimerId))
 		{
-			pStreamTimer =  pTestDataModel->getStreamTimers()[_iStreamId];
-		}
+			pTimer =  pTestDataModel->getTimers()[_iTimerId];
+		}*/
 		/*=====End - For Performance Testing=================*/
 		try
 		{
-			if(pStreamTimer) //For Performance Testing
+			/*if(pTimer) //For Performance Testing
 			{
-				pStreamTimer->setStartTimes();
-			}
+				pTimer->setStartTimes();
+			}*/
 
 			_pVmsConn->produceImageObjects(_pQueue);
 		}
