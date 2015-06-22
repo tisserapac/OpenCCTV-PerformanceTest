@@ -2,6 +2,10 @@ OpenCCTV
 ========
 The main goal of the OpenCCTV project is to provide a Video Analytic platform for CCTV camera base security solutions. OpenCCTV platform consists of a middleware and a Web application that enables integration of Video Management Systems (VMSes) with Video Analytics. We anticipate develop the system to support VMSes such as Milestone®, Zoneminder, OpenVSS etc. With this platform users will be able to execute their own Video Analytics on a distributed server apart from the VMSes and send Video Analytic results back to VMSes or write them to a user preferred database.
 
+NOTE:
+-----
+This repository contains the modules used in testing the performance of the OpenCCTV. Some of the modules are modified to include code on collecting performance data.
+
 Why did we start this project?
 ------------------------------
 Security & surveillance cameras are everywhere. There are many different VMSs are being deployed for management and storage purposes of video from these cameras.
