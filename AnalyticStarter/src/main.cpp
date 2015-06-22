@@ -216,6 +216,7 @@ int main()
 			{
 				iPort = STARTING_PORT; // reset port
 				util::log::Loggers::getDefaultLogger()->info("Killed all the Analytic processes.");
+				break; //For performance testing
 			}
 			else
 			{
