@@ -22,8 +22,8 @@ class Timer {
 private:
 	boost::mutex _mutex;
 
-	int _iId; //The id of the stream, analytic instance etc..
-	int _iCount;
+	unsigned int _iImageCount;
+	unsigned int _iStreamCount;
 	std::string _sLogFileName;
 
 	unsigned long long _lStartTime;
@@ -35,13 +35,15 @@ private:
 	/*timespec _timeStartClockTime;
 	timespec _timeStopClockTime;*/
 public:
-	Timer(int iCount, std::string sLogFileName, int iId = 0);
+	Timer(unsigned int iImageCount, unsigned int iStreamCount, std::string sLogFileName);
 	virtual ~Timer();
 
 	bool initLogFileEnty();
 	bool writeAverageTimes();
-	int getCount() const;
-	void setCount(int count);
+	unsigned int getImageCount() const;
+	void setImageCount(unsigned int iImageCount);
+	unsigned int getStreamCount() const;
+	void setStreamCount(unsigned int iStreamCount);
 	int getStreamId() const;
 	const std::string& getLogFileName() const;
 	void setStartTimes();

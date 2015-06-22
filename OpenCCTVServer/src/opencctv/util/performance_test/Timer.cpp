@@ -11,10 +11,10 @@ namespace opencctv {
 namespace util {
 namespace performance_test {
 
-Timer::Timer(int iCount, std::string sLogFileName, int iId)
+Timer::Timer(unsigned int iImageCount, unsigned int iStreamCount, std::string sLogFileName)
 {
-	_iCount = iCount;
-	_iId = iId;
+	_iImageCount = iImageCount;
+	_iStreamCount = iStreamCount;
 	_sLogFileName = sLogFileName;
 
 	_lStartTime = 0ull;
@@ -45,9 +45,9 @@ bool Timer::initLogFileEnty()
 
 bool Timer::writeAverageTimes()
 {
-	long double lAvgTime = (_lStopTime - _lStartTime)/(long double)_iCount;
-	long double lAvgCPUTime1 = (((long double)(_clockStop - _clockStart)*1000)/CLOCKS_PER_SEC)/_iCount;
-	//long double lAvgCPUTime2 = DateTime::diffClockTimeMs(_timeStartClockTime,_timeStopClockTime)/_iCount;
+	long double lAvgTime = (_lStopTime - _lStartTime)/(long double)(_iImageCount * _iStreamCount);
+	long double lAvgCPUTime1 = (((long double)(_clockStop - _clockStart)*1000)/CLOCKS_PER_SEC)/(_iImageCount * _iStreamCount);
+	//long double lAvgCPUTime2 = DateTime::diffClockTimeMs(_timeStartClockTime,_timeStopClockTime)/(_iImageCount * _iStreamCount);
 
 	std::ofstream logFile;
 	logFile.open (_sLogFileName.c_str(),std::ios_base::app);
@@ -67,16 +67,20 @@ bool Timer::writeAverageTimes()
 	return true;
 }
 
-int Timer::getCount() const {
-	return _iCount;
+unsigned int Timer::getImageCount() const {
+	return _iImageCount;
 }
 
-void Timer::setCount(int count) {
-	_iCount = count;
+void Timer::setImageCount(unsigned int iImageCount) {
+	_iImageCount = iImageCount;
 }
 
-int Timer::getStreamId() const {
-	return _iId;
+unsigned int Timer::getStreamCount() const {
+	return _iStreamCount;
+}
+
+void Timer::setStreamCount(unsigned int iStreamCount) {
+	_iStreamCount = iStreamCount;
 }
 
 void Timer::setStartTimes()
